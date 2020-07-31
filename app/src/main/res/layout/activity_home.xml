@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fox.wallpaper.ui.home.HomeActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view_linear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.gauravk.bubblenavigation.BubbleNavigationLinearView
+        android:id="@+id/bottom_navigation_view_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pink_bg_light"
+        android:elevation="10dp"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/l_item_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="true"
+            app:bt_colorActive="@color/red_active"
+            app:bt_colorInactive="@color/red_inactive"
+            app:bt_icon="@drawable/ic_home"
+            app:bt_shape="@drawable/ic_home_transition"
+            app:bt_title="@string/bottom_nav_home"
+            app:bt_padding="@dimen/internal_padding"
+            app:bt_titlePadding="@dimen/title_padding"/>
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/l_item_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/blue_active"
+            app:bt_colorInactive="@color/blue_inactive"
+            app:bt_icon="@drawable/ic_search"
+            app:bt_shape="@drawable/ic_search_transition"
+            app:bt_title="@string/bottom_nav_search"
+            app:bt_padding="@dimen/internal_padding"
+            app:bt_titlePadding="@dimen/title_padding" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/l_item_profile_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/blue_grey_active"
+            app:bt_colorInactive="@color/blue_grey_inactive"
+            app:bt_icon="@drawable/ic_profile"
+            app:bt_shape="@drawable/ic_profile_transition"
+            app:bt_title="@string/bottom_nav_profile"
+            app:bt_padding="@dimen/internal_padding"
+            app:bt_titlePadding="@dimen/title_padding" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/l_item_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/green_active"
+            app:bt_colorInactive="@color/green_inactive"
+            app:bt_icon="@drawable/ic_about"
+            app:bt_shape="@drawable/ic_about_transition"
+            app:bt_title="@string/bottom_nav_about"
+            app:bt_padding="@dimen/internal_padding"
+            app:bt_titlePadding="@dimen/title_padding" />
+
+    </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
