@@ -84,45 +84,16 @@ public class PhotoFragment extends BaseFragment implements PhotoContract.View {
         initRecyclerView();
 
         //Handle swipe action to refresh data
-        //onSwipeRefreshData();
+        onSwipeRefreshData();
 
         //Handle Load more event
-        //onScrollToLoadMore();
+        onScrollToLoadMore();
     }
 
     private void initView(View v) {
         unbinder = ButterKnife.bind(this, v);
         photos = new ArrayList<>();
     }
-
-    private void onFetchData(int p) {
-        onShowLoading();
-        mPresenter.onFetchData(String.valueOf(p));
-    }
-
-//    private void onLoadMoreData(int p) {
-//        mPresenter.onFetchData(String.valueOf(p));
-//    }
-
-//    private void onSwipeRefreshData() {
-//        swipeContainer.setOnRefreshListener(() -> {
-//            page = 1;
-//            onFetchData(page);
-//            handleSwipeRefreshAction();
-//            //onScrollToLoadMore();
-//        });
-//    }
-//
-//    private void onScrollToLoadMore() {
-//        rvImageGrid.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                page++;
-//                onShowLoading();
-//                onLoadMoreData(page++);
-//            }
-//        });
-//    }
 
     private void initRecyclerView() {
         layoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, 1);
@@ -132,13 +103,45 @@ public class PhotoFragment extends BaseFragment implements PhotoContract.View {
         rvImageGrid.setHasFixedSize(true);
     }
 
+    private void onSwipeRefreshData() {
+        swipeContainer.setOnRefreshListener(() -> {
+            page = 1;
+            onRefreshFlickrImageData(page);
+            handleSwipeRefreshAction();
+            //onScrollToLoadMore();
+        });
+    }
+
+    private void onFetchFlickrImageData(int p) {
+        mPresenter.onFetch(String.valueOf(p));
+    }
+
+    private void onRefreshFlickrImageData(int p) {
+        mPresenter.onRefresh(String.valueOf(p));
+    }
+
+    private void onLoadMoreFlickrImageData(int p) {
+        mPresenter.onLoadMore(String.valueOf(p));
+    }
+
+    private void onScrollToLoadMore() {
+        rvImageGrid.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page++;
+                onShowLoading();
+                onLoadMoreFlickrImageData(page++);
+            }
+        });
+    }
+
     private void onLoadDataToRecyclerView() {
         if(adapter != null ) {
             adapter = null;
         }
         if(adapter == null) {
             adapter = new FlickrFavImgStaggeredRecyclerViewAdapter(photos);
-            rvImageGrid.getRecycledViewPool().clear();
+            //rvImageGrid.getRecycledViewPool().clear();
             rvImageGrid.setAdapter(adapter);
         }
     }
@@ -153,7 +156,7 @@ public class PhotoFragment extends BaseFragment implements PhotoContract.View {
     public void onResume() {
         super.onResume();
         //Fetch image data from flickr service
-        onFetchData(page);
+        onFetchFlickrImageData(page);
     }
 
     @Override
@@ -173,7 +176,26 @@ public class PhotoFragment extends BaseFragment implements PhotoContract.View {
     }
 
     @Override
-    public void onFetchError(Throwable e) {
+    public void onRefreshSuccess(List<Photo> mPhotos) {
+        onHideLoading();
+        photos.clear();
+        if(mPhotos != null) {
+            photos.addAll(mPhotos);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadMoreSuccess(List<Photo> mPhotos) {
+        onHideLoading();
+        if(mPhotos != null) {
+            photos.addAll(mPhotos);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onError(Throwable e) {
         onHideLoading();
         AppLogger.e(e);
     }

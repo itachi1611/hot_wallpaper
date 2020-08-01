@@ -30,6 +30,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View { //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isOnline();
         setContentView(R.layout.activity_home);  //TODO: create the layout and add it here
 
         initView();

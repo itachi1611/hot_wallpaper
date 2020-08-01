@@ -84,4 +84,14 @@ public class SharedPreferencesHelper extends Constants {
         return preferences.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
 
+    public void setLoginState(boolean isLogin) {
+        editor = preferences.edit();
+        editor.putBoolean(IS_LOGIN, isLogin);
+        editor.commit();
+    }
+
+    public boolean isLogin() {
+        return preferences.getBoolean(IS_LOGIN, false);
+    }
+
 }

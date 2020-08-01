@@ -81,4 +81,9 @@
     <color name="grey_bg_light">#fafafa</color>
     <color name="pink_bg_light">#F3DEF1</color>
 
+    <!--AuthBottomFragment-->
+    <color name="color_text">#e1e5ee</color>
+    <color name="color_devider">#cfc391</color>
+    <color name="color_hint">#cfc391</color>
+
 </resources>

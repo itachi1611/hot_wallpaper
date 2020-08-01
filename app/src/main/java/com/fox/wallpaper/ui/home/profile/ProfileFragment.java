@@ -4,16 +4,31 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.bases.BaseFragment;
+import com.fox.wallpaper.bases.MainApplication;
+import com.fox.wallpaper.helpers.SharedPreferencesHelper;
 
-public class ProfileFragment extends BaseFragment implements ProfileContract.View {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-    private View v;
+public class ProfileFragment extends BaseFragment implements ProfileContract.View, View.OnClickListener{
+
+    @BindView(R.id.lnNoLogin)
+    LinearLayout lnNoLogin;
+
+    @BindView(R.id.btnLogin)
+    Button btnLogin;
+
+    private Unbinder unbinder;
+    private SharedPreferencesHelper pref;
 
     private ProfileContract.Presenter mPresenter = new ProfilePresenter(this);   // Presenter
 
@@ -40,10 +55,52 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView();
+        initView(view);
+
+        btnLogin.setOnClickListener(this);
     }
 
-    private void initView() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isLogin()) {
+            lnNoLogin.setVisibility(View.VISIBLE);
+        } else {
+            lnNoLogin.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    private void initView(View v) {
+        unbinder = ButterKnife.bind(this, v);
+        //Get app's preference
+        pref = MainApplication.self().getPref();
+    }
+
+    private boolean isLogin() {
+        boolean isLogin;
+        if(pref.isLogin()) {
+            isLogin = true;
+        } else {
+            isLogin = false;
+        }
+        return isLogin;
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.btnLogin) {
+            onLogin();
+        }
+    }
+
+    private void onLogin() {
 
     }
 

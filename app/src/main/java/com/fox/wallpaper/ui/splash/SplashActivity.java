@@ -22,6 +22,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isOnline();
         hideStatusBar();
         setContentView(R.layout.activity_splash);  //TODO: create the layout and add it here
 

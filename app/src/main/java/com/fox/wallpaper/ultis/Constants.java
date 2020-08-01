@@ -13,6 +13,7 @@ public class Constants {
     public static final String PREF_NAME = "wallpaper_pref";
 
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    public static final String IS_LOGIN = "IsLogin";
 
     public static final int PRIVATE_MODE = 0;
 
@@ -27,7 +28,7 @@ public class Constants {
     public static final String FLICKR_NO_JSON_CALLBACK = "1";
     public static final String FLICKR_METHOD = "flickr.favorites.getList";
     public static final String FLICKR_OPTION = "views, media, path_alias, url_sq, url_t, url_s, url_q, url_m, url_n, url_z, url_c, url_l, url_o";
-    public static final String FLICKR_PER_PAGE = "12";
+    public static final String FLICKR_PER_PAGE = "30";
     public static final String FLICKR_FORMAT = "json";
 
     //Api Option

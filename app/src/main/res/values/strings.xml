@@ -41,4 +41,13 @@
     <string name="bottom_nav_search">Search</string>
     <string name="bottom_nav_home">Home</string>
 
+    <!--ProfileFragment-->
+    <string name="warning_no_login">You need to login to view your profile</string>
+    <string name="btnLogin">Sign in</string>
+
+    <!--AuthBottomFragment-->
+    <string name="auth_tv_login">Sign In</string>
+    <string name="auth_edt_password">Password</string>
+    <string name="auth_edt_email">Email</string>
+
 </resources>
