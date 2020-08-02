@@ -14,12 +14,13 @@ import com.fox.wallpaper.R;
 import com.fox.wallpaper.bases.BaseFragment;
 import com.fox.wallpaper.bases.MainApplication;
 import com.fox.wallpaper.helpers.SharedPreferencesHelper;
+import com.fox.wallpaper.ui.customs.AuthBottomDialogFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ProfileFragment extends BaseFragment implements ProfileContract.View, View.OnClickListener{
+public class ProfileFragment extends BaseFragment implements ProfileContract.View, View.OnClickListener {
 
     @BindView(R.id.lnNoLogin)
     LinearLayout lnNoLogin;
@@ -96,12 +97,13 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.btnLogin) {
-            onLogin();
+            onShowLoginFragment();
         }
     }
 
-    private void onLogin() {
-
+    private void onShowLoginFragment() {
+        AuthBottomDialogFragment authFragment = AuthBottomDialogFragment.newInstance();
+        authFragment.show(getChildFragmentManager(), AuthBottomDialogFragment.TAG);
     }
 
 }
