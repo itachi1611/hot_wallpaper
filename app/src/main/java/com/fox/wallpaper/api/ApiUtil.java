@@ -9,4 +9,8 @@ public class ApiUtil extends Constants {
         return RetrofitClient.getClient(BASE_URL, isAuthorization, token).create(FlickrService.class);
     }
 
+    public static FlickrService getSearchImageList(boolean isAuthorization, String token) {
+        return RetrofitClient.getClient(BASE_URL, isAuthorization, token).create(FlickrService.class);
+    }
+
 }

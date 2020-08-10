@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.holders.FlickrFavImgViewHolder;
-import com.fox.wallpaper.holders.FlickrSearchImgViewHolder;
-import com.fox.wallpaper.models.Photo;
+import com.fox.wallpaper.models.PhotoSearchItem;
 
 import java.util.List;
 
-public class FlickrFavImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapter<FlickrSearchImgViewHolder> {
+public class FlickrSearchImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapter<FlickrFavImgViewHolder> {
 
-    private List<Photo> mImageLists;
+    private List<PhotoSearchItem> mImageLists;
 
     //Image ratio
     private ConstraintSet constraintSet = new ConstraintSet();
@@ -27,19 +26,19 @@ public class FlickrFavImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapt
         return constraintSet;
     }
 
-    public FlickrFavImgStaggeredRecyclerViewAdapter(List<Photo> mImageLists) {
+    public FlickrSearchImgStaggeredRecyclerViewAdapter(List<PhotoSearchItem> mImageLists) {
         this.mImageLists = mImageLists;
     }
 
     @NonNull
     @Override
-    public FlickrSearchImgViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new FlickrSearchImgViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_flickr_photo, parent, false));
+    public FlickrFavImgViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new FlickrFavImgViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_flickr_photo, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FlickrSearchImgViewHolder holder, int position) {
-        Photo photo = mImageLists.get(position);
+    public void onBindViewHolder(@NonNull FlickrFavImgViewHolder holder, int position) {
+        PhotoSearchItem photo = mImageLists.get(position);
         holder.onBindData(photo);
         setDiffRatio(photo, holder.constrainContainer, holder.imageViewWidget);
     }
@@ -49,18 +48,18 @@ public class FlickrFavImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapt
         return (mImageLists != null) ? mImageLists.size() : 0;
     }
 
-    public List<Photo> getFlickrFavoritesImageList() {
+    public List<PhotoSearchItem> getFlickrFavoritesImageList() {
         return mImageLists;
     }
 
-    private void setDiffRatio(Photo photo, ConstraintLayout constraintLayout, ImageView imageView) {
+    private void setDiffRatio(PhotoSearchItem photo, ConstraintLayout constraintLayout, ImageView imageView) {
         int width, height;
         if(photo.getUrlO() != null) {
-            width = Integer.parseInt(photo.getWidthO());
-            height = Integer.parseInt(photo.getHeightO());
+            width = photo.getWidthO();
+            height = photo.getHeightO();
         } else {
-            width = Integer.parseInt(photo.getWidthL());
-            height = Integer.parseInt(photo.getHeightL());
+            width = photo.getWidthL();
+            height = photo.getHeightL();
         }
         String ratio = String.format("%d:%d", width, height);
         constraintSet.clone(constraintLayout);
@@ -68,7 +67,7 @@ public class FlickrFavImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapt
         constraintSet.applyTo(constraintLayout);
     }
 
-    public void setFlickrFavoritesImageList(List<Photo> photos) {
+    public void setFlickrFavoritesImageList(List<PhotoSearchItem> photos) {
         this.mImageLists.clear();
         this.mImageLists = photos;
         notifyDataSetChanged();

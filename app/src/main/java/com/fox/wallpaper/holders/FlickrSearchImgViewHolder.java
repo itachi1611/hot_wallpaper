@@ -13,14 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Priority;
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.models.Photo;
-import com.fox.wallpaper.models.PhotoSearchItem;
 import com.fox.wallpaper.ui.photo_detail.PhotoPreviewActivity;
 import com.fox.wallpaper.ultis.ImageViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FlickrFavImgViewHolder extends RecyclerView.ViewHolder {
+public class FlickrSearchImgViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.constrainContainer)
     public ConstraintLayout constrainContainer;
@@ -33,13 +32,13 @@ public class FlickrFavImgViewHolder extends RecyclerView.ViewHolder {
 
     private View itemView;
 
-    public FlickrFavImgViewHolder(@NonNull View itemView) {
+    public FlickrSearchImgViewHolder(@NonNull View itemView) {
         super(itemView);
         this.itemView = itemView;
         ButterKnife.bind(this, itemView);
     }
 
-    public void onBindData(PhotoSearchItem photo) {
+    public void onBindData(Photo photo) {
         String image_url;
         Context context = itemView.getContext();
 

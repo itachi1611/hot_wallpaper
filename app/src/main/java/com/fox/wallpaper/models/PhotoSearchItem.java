@@ -3,7 +3,9 @@ package com.fox.wallpaper.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PhotoSearchItem {
+import java.io.Serializable;
+
+public class PhotoSearchItem implements Serializable {
 
     @SerializedName("id")
     @Expose

@@ -101,6 +101,7 @@ public class PhotoPreviewActivity extends BaseActivity implements PhotoPreviewCo
         ibShare.setOnClickListener(view -> {
             //TODO
             //Share image and content to facebook
+            CommonUtils.showInfoToast(PhotoPreviewActivity.this, "Share function is under development !");
         });
 
     }

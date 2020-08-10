@@ -2,35 +2,51 @@ package com.fox.wallpaper.ui.home.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.fox.wallpaper.R;
+import com.fox.wallpaper.adapters.FlickrFavImgStaggeredRecyclerViewAdapter;
+import com.fox.wallpaper.adapters.FlickrSearchImgStaggeredRecyclerViewAdapter;
 import com.fox.wallpaper.bases.BaseFragment;
+import com.fox.wallpaper.models.PhotoSearchItem;
+import com.fox.wallpaper.ultis.AppLogger;
 import com.paulrybitskyi.persistentsearchview.PersistentSearchView;
 import com.paulrybitskyi.persistentsearchview.adapters.model.SuggestionItem;
-import com.paulrybitskyi.persistentsearchview.listeners.OnSearchConfirmedListener;
-import com.paulrybitskyi.persistentsearchview.listeners.OnSearchQueryChangeListener;
 import com.paulrybitskyi.persistentsearchview.listeners.OnSuggestionChangeListener;
 import com.paulrybitskyi.persistentsearchview.utils.VoiceRecognitionDelegate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.fox.wallpaper.ultis.Constants.NUM_COLUMNS;
+
 public class SearchFragment extends BaseFragment implements SearchContract.View {
 
     @BindView(R.id.persistentSearchView)
     PersistentSearchView persistentSearchView;
 
+    @BindView(R.id.rvSearchPhoto)
+    RecyclerView rvSearchPhoto;
+
+    private StaggeredGridLayoutManager layoutManager;
+    private FlickrSearchImgStaggeredRecyclerViewAdapter adapter;
+
     private Unbinder unbinder;
+
+    //Declare list photos
+    private List<PhotoSearchItem> photos;
 
     private SearchContract.Presenter mPresenter = new SearchPresenter(this);   // Presenter
 
@@ -59,6 +75,9 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         super.onViewCreated(view, savedInstanceState);
         initView(view);
 
+        //Init RecyclerView
+        initRecyclerView();
+
         persistentSearchView.setOnLeftBtnClickListener(v1 -> {
         // Handle the left button click
         });
@@ -73,11 +92,13 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         persistentSearchView.setOnSearchConfirmedListener((searchView, query) -> {
         // Handle a search confirmation. This is the place where you'd
         // want to perform a search against your data provider.
+            onSearchFlickrImageData(query);
         });
 
         persistentSearchView.setOnSearchQueryChangeListener((searchView, oldQuery, newQuery) -> {
         // Handle a search query change. This is the place where you'd
         // want load new suggestions based on the newQuery parameter.
+            //onSearchFlickrImageData(newQuery);
         });
 
         persistentSearchView.setOnSuggestionChangeListener(new OnSuggestionChangeListener() {
@@ -100,13 +121,28 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
     }
 
+    private void initRecyclerView() {
+        layoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, 1);
+        rvSearchPhoto.setLayoutManager(layoutManager);
+        rvSearchPhoto.setItemAnimator(new DefaultItemAnimator());
+        rvSearchPhoto.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        rvSearchPhoto.setHasFixedSize(true);
+    }
+
+    private void onSearchFlickrImageData(String s) {
+        onShowLoading();
+        mPresenter.onSearch(s);
+    }
+
     private void initView(View v) {
         unbinder = ButterKnife.bind(this, v);
+        photos = new ArrayList<>();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        onSearchFlickrImageData("nature");
     }
 
     @Override
@@ -114,4 +150,36 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         super.onDestroy();
         unbinder.unbind();
     }
+
+    private void onLoadDataToRecyclerView() {
+        if(adapter != null ) {
+            adapter = null;
+        }
+        if(adapter == null) {
+            adapter = new FlickrSearchImgStaggeredRecyclerViewAdapter(photos);
+            //rvImageGrid.getRecycledViewPool().clear();
+            rvSearchPhoto.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void onSearchSuccess(List<PhotoSearchItem> mPhotos) {
+        onHideLoading();
+        photos.clear();
+        if(mPhotos != null) {
+            photos.addAll(mPhotos);
+        }
+        if(persistentSearchView.isExpanded()) {
+            persistentSearchView.collapse();
+            return;
+        }
+        onLoadDataToRecyclerView();
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        onHideLoading();
+        AppLogger.e(e);
+    }
+
 }
