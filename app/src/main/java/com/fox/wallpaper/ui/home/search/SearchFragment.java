@@ -171,7 +171,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         }
         if(persistentSearchView.isExpanded()) {
             persistentSearchView.collapse();
-            return;
         }
         onLoadDataToRecyclerView();
     }

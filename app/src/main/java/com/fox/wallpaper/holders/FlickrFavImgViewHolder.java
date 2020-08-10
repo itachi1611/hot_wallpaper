@@ -39,7 +39,7 @@ public class FlickrFavImgViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void onBindData(PhotoSearchItem photo) {
+    public void onBindData(Photo photo) {
         String image_url;
         Context context = itemView.getContext();
 

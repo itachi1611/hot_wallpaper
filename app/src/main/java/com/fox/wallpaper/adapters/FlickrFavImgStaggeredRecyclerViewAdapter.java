@@ -16,7 +16,7 @@ import com.fox.wallpaper.models.Photo;
 
 import java.util.List;
 
-public class FlickrFavImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapter<FlickrSearchImgViewHolder> {
+public class FlickrFavImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapter<FlickrFavImgViewHolder> {
 
     private List<Photo> mImageLists;
 
@@ -33,12 +33,12 @@ public class FlickrFavImgStaggeredRecyclerViewAdapter extends RecyclerView.Adapt
 
     @NonNull
     @Override
-    public FlickrSearchImgViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new FlickrSearchImgViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_flickr_photo, parent, false));
+    public FlickrFavImgViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new FlickrFavImgViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_flickr_photo, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FlickrSearchImgViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FlickrFavImgViewHolder holder, int position) {
         Photo photo = mImageLists.get(position);
         holder.onBindData(photo);
         setDiffRatio(photo, holder.constrainContainer, holder.imageViewWidget);

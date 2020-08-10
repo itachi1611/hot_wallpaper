@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Priority;
 import com.fox.wallpaper.R;
-import com.fox.wallpaper.models.Photo;
+import com.fox.wallpaper.models.PhotoSearchItem;
 import com.fox.wallpaper.ui.photo_detail.PhotoPreviewActivity;
 import com.fox.wallpaper.ultis.ImageViewUtils;
 
@@ -38,7 +38,7 @@ public class FlickrSearchImgViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void onBindData(Photo photo) {
+    public void onBindData(PhotoSearchItem photo) {
         String image_url;
         Context context = itemView.getContext();
 
