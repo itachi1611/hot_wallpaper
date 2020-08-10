@@ -55,6 +55,7 @@ public class FlickrSearchImgViewHolder extends RecyclerView.ViewHolder {
         imageViewWidget.setOnClickListener(v -> {
             Intent intent = new Intent(context, PhotoPreviewActivity.class);
             intent.putExtra("photo", photo);
+            intent.putExtra("status", "search");
             context.startActivity(intent);
         });
     }

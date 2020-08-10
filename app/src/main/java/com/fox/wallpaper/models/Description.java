@@ -3,7 +3,9 @@ package com.fox.wallpaper.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Description {
+import java.io.Serializable;
+
+public class Description implements Serializable {
 
     @SerializedName("_content")
     @Expose

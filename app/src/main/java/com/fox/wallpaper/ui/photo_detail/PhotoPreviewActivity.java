@@ -35,6 +35,7 @@ import com.facebook.share.widget.ShareDialog;
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.bases.BaseActivity;
 import com.fox.wallpaper.models.Photo;
+import com.fox.wallpaper.models.PhotoSearchItem;
 import com.fox.wallpaper.ultis.CommonUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -61,10 +62,12 @@ public class PhotoPreviewActivity extends BaseActivity implements PhotoPreviewCo
 
     private ShareDialog shareDialog;
 
-    private Photo photo;
+    private Photo photo1;
+    private PhotoSearchItem photo2;
     private static String[] link = new String[10];
     private long downloadId;
     private Unbinder unbinder;
+    private String status;
 
     private PhotoPreviewContract.Presenter mPresenter = new PhotoPreviewPresenter(this);    // Presenter
 
@@ -78,31 +81,62 @@ public class PhotoPreviewActivity extends BaseActivity implements PhotoPreviewCo
         registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         Intent intent = getIntent();
+        status = intent.getStringExtra("status");
         if(intent != null) {
-            photo = (Photo) intent.getSerializableExtra("photo");
+            if(status.equals("fav")) {
+                photo1 = (Photo) intent.getSerializableExtra("photo");
+            } else if(status.equals("search")) {
+                photo2 = (PhotoSearchItem) intent.getSerializableExtra("photo");
+            }
+
         }
 
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.drawable.ic_no_image);
+        if(photo1 != null) {
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.ic_no_image);
 
-        Glide.with(PhotoPreviewActivity.this)
-                .load((photo.getUrlO() != null) ? photo.getUrlO().trim() : photo.getUrlL().trim())
-                .error(R.drawable.ic_no_image)
-                .apply(requestOptions)
-                .transition(new DrawableTransitionOptions().crossFade())
-                .skipMemoryCache(false)
-                .into(imageView_widget);
+            Glide.with(PhotoPreviewActivity.this)
+                    .load((photo1.getUrlO() != null) ? photo1.getUrlO().trim() : photo1.getUrlL().trim())
+                    .error(R.drawable.ic_no_image)
+                    .apply(requestOptions)
+                    .transition(new DrawableTransitionOptions().crossFade())
+                    .skipMemoryCache(false)
+                    .into(imageView_widget);
 
-        imageView_widget.setOnTouchListener(new ImageMatrixTouchHandler(this));
-        //Add button download <m,z,c,l,o>
-        getPhotoUrl();
-        initDownloadButton(link);
+            imageView_widget.setOnTouchListener(new ImageMatrixTouchHandler(this));
+            //Add button download <m,z,c,l,o>
+            getPhotoUrl();
+            initDownloadButton(link);
 
-        ibShare.setOnClickListener(view -> {
-            //TODO
-            //Share image and content to facebook
-            CommonUtils.showInfoToast(PhotoPreviewActivity.this, "Share function is under development !");
-        });
+            ibShare.setOnClickListener(view -> {
+                //TODO
+                //Share image and content to facebook
+                CommonUtils.showInfoToast(PhotoPreviewActivity.this, "Share function is under development !");
+            });
+        } else if (photo2 != null) {
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.ic_no_image);
+
+            Glide.with(PhotoPreviewActivity.this)
+                    .load((photo2.getUrlO() != null) ? photo2.getUrlO().trim() : photo2.getUrlL().trim())
+                    .error(R.drawable.ic_no_image)
+                    .apply(requestOptions)
+                    .transition(new DrawableTransitionOptions().crossFade())
+                    .skipMemoryCache(false)
+                    .into(imageView_widget);
+
+            imageView_widget.setOnTouchListener(new ImageMatrixTouchHandler(this));
+            //Add button download <m,z,c,l,o>
+            getPhotoUrl();
+            initDownloadButton(link);
+
+            ibShare.setOnClickListener(view -> {
+                //TODO
+                //Share image and content to facebook
+                CommonUtils.showInfoToast(PhotoPreviewActivity.this, "Share function is under development !");
+            });
+        }
+
 
     }
 
@@ -124,11 +158,20 @@ public class PhotoPreviewActivity extends BaseActivity implements PhotoPreviewCo
     };
 
     private void getPhotoUrl() {
-        link[0] = photo.getUrlO();
-        link[1] = photo.getUrlL();
-        link[2] = photo.getUrlC();
-        link[3] = photo.getUrlZ();
-        link[4] = photo.getUrlM();
+        if(photo1 != null) {
+            link[0] = photo1.getUrlO();
+            link[1] = photo1.getUrlL();
+            link[2] = photo1.getUrlC();
+            link[3] = photo1.getUrlZ();
+            link[4] = photo1.getUrlM();
+        } else if(photo2 != null) {
+            link[0] = photo2.getUrlO();
+            link[1] = photo2.getUrlL();
+            link[2] = photo2.getUrlC();
+            link[3] = photo2.getUrlZ();
+            link[4] = photo2.getUrlM();
+        }
+
     }
 
     private void initDownloadButton(final String[] url) {
@@ -137,19 +180,39 @@ public class PhotoPreviewActivity extends BaseActivity implements PhotoPreviewCo
                 FloatingActionButton floatingActionButton = new FloatingActionButton(PhotoPreviewActivity.this);
                 switch (i){
                     case 0:
-                        floatingActionButton.setTitle(photo.getWidthO() + " x " + photo.getHeightO());
+                        if(photo1 != null) {
+                            floatingActionButton.setTitle(photo1.getWidthO() + " x " + photo1.getHeightO());
+                        } else if(photo2 != null) {
+                            floatingActionButton.setTitle(photo2.getWidthO() + " x " + photo2.getHeightO());
+                        }
                         break;
                     case 1:
-                        floatingActionButton.setTitle(photo.getWidthL() + " x " + photo.getHeightL());
+                        if(photo1 != null) {
+                            floatingActionButton.setTitle(photo1.getWidthL() + " x " + photo1.getHeightL());
+                        } else if(photo2 != null) {
+                            floatingActionButton.setTitle(photo2.getWidthL() + " x " + photo2.getHeightL());
+                        }
                         break;
                     case 2:
-                        floatingActionButton.setTitle(photo.getWidthC() + " x " + photo.getHeightC());
+                        if(photo1 != null) {
+                            floatingActionButton.setTitle(photo1.getWidthC() + " x " + photo1.getHeightC());
+                        } else if(photo2 != null) {
+                            floatingActionButton.setTitle(photo2.getWidthC() + " x " + photo2.getHeightC());
+                        }
                         break;
                     case 3:
-                        floatingActionButton.setTitle(photo.getWidthZ() + " x " + photo.getHeightZ());
+                        if(photo1 != null) {
+                            floatingActionButton.setTitle(photo1.getWidthZ() + " x " + photo1.getHeightZ());
+                        } else if(photo2 != null) {
+                            floatingActionButton.setTitle(photo2.getWidthZ() + " x " + photo2.getHeightZ());
+                        }
                         break;
                     case 4:
-                        floatingActionButton.setTitle(photo.getWidthM() + " x " + photo.getHeightM());
+                        if(photo1 != null) {
+                            floatingActionButton.setTitle(photo1.getWidthM() + " x " + photo1.getHeightM());
+                        } else if(photo2 != null) {
+                            floatingActionButton.setTitle(photo2.getWidthM() + " x " + photo2.getHeightM());
+                        }
                         break;
                 }
                 floatingActionButton.setIcon(R.drawable.ic_download);
@@ -256,6 +319,8 @@ public class PhotoPreviewActivity extends BaseActivity implements PhotoPreviewCo
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        photo1 = null;
+        photo2 = null;
         unregisterReceiver(onDownloadComplete);
     }
 }

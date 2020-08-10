@@ -10,7 +10,6 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fox.wallpaper.R;
-import com.fox.wallpaper.holders.FlickrFavImgViewHolder;
 import com.fox.wallpaper.holders.FlickrSearchImgViewHolder;
 import com.fox.wallpaper.models.PhotoSearchItem;
 
