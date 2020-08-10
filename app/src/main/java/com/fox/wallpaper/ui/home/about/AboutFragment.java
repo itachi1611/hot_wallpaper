@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.bases.BaseFragment;
+import com.fox.wallpaper.ultis.CommonUtils;
+
+import mehdi.sakout.aboutpage.AboutPage;
+import mehdi.sakout.aboutpage.Element;
 
 public class AboutFragment extends BaseFragment implements AboutContract.View {
 
@@ -27,7 +31,23 @@ public class AboutFragment extends BaseFragment implements AboutContract.View {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        View aboutPage = new AboutPage(getContext())
+                .isRTL(false)
+                .setDescription(getString(R.string.about_description))
+                .setImage(R.mipmap.ic_launcher_round)
+                .addItem(new Element().setTitle("Version 1.0 alpha 1"))
+                .addGroup("Connect with us")
+                .addEmail("shinrojp@gmail.com")
+                .addWebsite("https://shinrojp.github.io/shinrojp-android/")
+                .addFacebook("https://www.facebook.com/shinrojp")
+                .addTwitter("https://twitter.com/shinrojp1")
+                .addYoutube("https://www.youtube.com/channel/UC1ld_J1c9SPVHv8jvFiUCeA?view_as=subscriber")
+                .addPlayStore("")
+                .addInstagram("https://www.instagram.com/shinrojp/")
+                .addGitHub("https://github.com/shinrojp")
+                .addItem(CommonUtils.getCopyRightsElement(getContext()))
+                .create();
+        return aboutPage;
     }
 
     @Override
@@ -41,8 +61,6 @@ public class AboutFragment extends BaseFragment implements AboutContract.View {
         initView();
     }
 
-    private void initView() {
-
-    }
+    private void initView() {}
 
 }

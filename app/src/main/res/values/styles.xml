@@ -67,4 +67,8 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="MenuLabel">
+        <item name="android:textColor">@color/pink_pressed</item>
+    </style>
+
 </resources>

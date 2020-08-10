@@ -1,11 +1,10 @@
 package com.fox.wallpaper.models;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class Photos {
+public class PhotosSearchItem {
 
     @SerializedName("page")
     @Expose
@@ -18,10 +17,10 @@ public class Photos {
     private Integer perpage;
     @SerializedName("total")
     @Expose
-    private Integer total;
+    private String total;
     @SerializedName("photo")
     @Expose
-    private List<Photo> photo = null;
+    private List<PhotoSearchItem> photo = null;
 
     public Integer getPage() {
         return page;
@@ -47,19 +46,19 @@ public class Photos {
         this.perpage = perpage;
     }
 
-    public Integer getTotal() {
+    public String getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(String total) {
         this.total = total;
     }
 
-    public List<Photo> getPhoto() {
+    public List<PhotoSearchItem> getPhoto() {
         return photo;
     }
 
-    public void setPhoto(List<Photo> photo) {
+    public void setPhoto(List<PhotoSearchItem> photo) {
         this.photo = photo;
     }
 

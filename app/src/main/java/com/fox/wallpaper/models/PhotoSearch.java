@@ -3,20 +3,20 @@ package com.fox.wallpaper.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FlickrFavorites {
+public class PhotoSearch {
 
     @SerializedName("photos")
     @Expose
-    private Photos photos;
+    private PhotosSearchItem photos;
     @SerializedName("stat")
     @Expose
     private String stat;
 
-    public Photos getPhotos() {
+    public PhotosSearchItem getPhotos() {
         return photos;
     }
 
-    public void setPhotos(Photos photos) {
+    public void setPhotos(PhotosSearchItem photos) {
         this.photos = photos;
     }
 

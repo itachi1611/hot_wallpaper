@@ -113,14 +113,17 @@ public class PhotoFragment extends BaseFragment implements PhotoContract.View {
     }
 
     private void onFetchFlickrImageData(int p) {
+        onShowLoading();
         mPresenter.onFetch(String.valueOf(p));
     }
 
     private void onRefreshFlickrImageData(int p) {
+        onShowLoading();
         mPresenter.onRefresh(String.valueOf(p));
     }
 
     private void onLoadMoreFlickrImageData(int p) {
+        onShowLoading();
         mPresenter.onLoadMore(String.valueOf(p));
     }
 
@@ -129,7 +132,6 @@ public class PhotoFragment extends BaseFragment implements PhotoContract.View {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 page++;
-                onShowLoading();
                 onLoadMoreFlickrImageData(page++);
             }
         });

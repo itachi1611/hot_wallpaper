@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Priority;
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.models.Photo;
+import com.fox.wallpaper.ui.photo_detail.PhotoPreviewActivity;
 import com.fox.wallpaper.ultis.ImageViewUtils;
 
 import butterknife.BindView;
@@ -54,8 +55,9 @@ public class FlickrFavImgViewHolder extends RecyclerView.ViewHolder {
         imageViewWidget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(context, PhotoDetailActivity.class);
-                //context.startActivity(intent);
+                Intent intent = new Intent(context, PhotoPreviewActivity.class);
+                intent.putExtra("photo", photo);
+                context.startActivity(intent);
             }
         });
     }

@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.adapters.BottomNavigationAdapter;
 import com.fox.wallpaper.bases.BaseActivity;
+import com.fox.wallpaper.bases.BaseDialog;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 
 import butterknife.BindView;

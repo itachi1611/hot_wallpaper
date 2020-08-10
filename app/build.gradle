@@ -135,4 +135,10 @@ dependencies {
     //Bubble navigation
     implementation "com.gauravk.bubblenavigation:bubblenavigation:$rootProject.bubble_navigation"
 
+    //PersistentSearchView
+    implementation "com.paulrybitskyi.persistentsearchview:persistentsearchview:$rootProject.persistent_search_view"
+
+    //Facebook SDK
+    implementation "com.facebook.android:facebook-share:$rootProject.facebook_sdk"
+
 }

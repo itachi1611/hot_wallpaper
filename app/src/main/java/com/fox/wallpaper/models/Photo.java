@@ -1,4 +1,3 @@
-
 package com.fox.wallpaper.models;
 
 import com.google.gson.annotations.Expose;

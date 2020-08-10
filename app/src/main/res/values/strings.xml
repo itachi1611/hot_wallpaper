@@ -50,4 +50,8 @@
     <string name="auth_edt_password">Password</string>
     <string name="auth_edt_email">Email</string>
 
+    <!--Facebook SDK-->
+    <string name="facebook_app_id">237416013994599</string>
+    <string name="fb_login_protocol_scheme">fb237416013994599</string>
+
 </resources>

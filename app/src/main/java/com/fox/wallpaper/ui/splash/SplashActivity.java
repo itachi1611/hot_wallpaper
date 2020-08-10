@@ -1,7 +1,12 @@
 package com.fox.wallpaper.ui.splash;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -9,6 +14,9 @@ import android.widget.ImageView;
 import com.fox.wallpaper.R;
 import com.fox.wallpaper.bases.BaseActivity;
 import com.fox.wallpaper.ui.intro.IntroActivity;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import static com.fox.wallpaper.ultis.Constants.SPLASH_TIME_OUT;
 
